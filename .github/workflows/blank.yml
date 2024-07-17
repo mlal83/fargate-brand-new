@@ -47,7 +47,7 @@ jobs:
 
         #add manual repo url to below plan
       - name: Plan Terraform changes
-        run: terraform plan -var "image_url=${{ steps.ecr-login.outputs.registry }}/#manjularepo:${{ github.sha }}"
+        run: terraform plan -var "image_url=${{ steps.ecr-login.outputs.registry }}/my-java-app1:${{ github.sha }}"
 
         #add manual repo url to below plan
       - name: Apply Terraform changes
