@@ -33,7 +33,7 @@ jobs:
       - name: Build, tag, and push Docker image to ECR
         env:
           ECR_REGISTRY: ${{ steps.ecr-login.outputs.registry }}
-          ECR_REPOSITORY: 637423595774.dkr.ecr.eu-west-2.amazonaws.com/my-java-app1
+          ECR_REPOSITORY: my-java-app1
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
