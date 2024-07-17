@@ -7,7 +7,7 @@
 name: CI/CD pipeline/
 
 on:
-  push:
+  [push,workflow_dispatch]
     branches:
       - main
 
