@@ -4,9 +4,12 @@
 
 #need AWS credentials to feed into pipeline for authentication in order to build infrastructure
 
-name: CI/CD pipeline/
+name: CI/CD pipeline
 
-on: [push,workflow_dispatch]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   build:
@@ -30,7 +33,7 @@ jobs:
       - name: Build, tag, and push Docker image to ECR
         env:
           ECR_REGISTRY: ${{ steps.ecr-login.outputs.registry }}
-          ECR_REPOSITORY: ${{ 637423595774.dkr.ecr.eu-west-2.amazonaws.com/my-java-app1 }}
+          ECR_REPOSITORY: https://eu-west-2.console.aws.amazon.com/ecr/repositories/private/637423595774/my-java-app1?region=eu-west-2
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
@@ -38,3 +41,15 @@ jobs:
 
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v1
+
+      - name: Initialize Terraform
+        run: terraform init
+
+        #add manula repo url to below plan
+      - name: Plan Terraform changes
+        run: terraform plan -var "image_url=${{ steps.ecr-login.outputs.registry }}/#manjularepo:${{ github.sha }}"
+
+        #add manula repo url to below plan
+      - name: Apply Terraform changes
+        run: terraform apply -auto-approve -var "image_url=${{ steps.ecr-login.outputs.registry }}/#manjularepo:${{ github.sha }}"
+      
