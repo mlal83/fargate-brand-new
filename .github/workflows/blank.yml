@@ -6,10 +6,7 @@
 
 name: CI/CD pipeline/
 
-on:
-  [push,workflow_dispatch]
-    branches:
-      - main
+on: [push,workflow_dispatch]
 
 jobs:
   build:
