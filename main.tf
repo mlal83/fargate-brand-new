@@ -147,24 +147,4 @@ variable "image_url" {
   description = "The URL of the Docker image to deploy"
 }
 
-# Example usage in a resource
-resource "aws_ecs_task_definition" "example" {
-  family                   = "example-task"
-  container_definitions   = <<EOF
-  [
-    {
-      "name": "example-container",
-      "image": "${var.image_url}",
-      "cpu": 256,
-      "memory": 512,
-      "essential": true,
-      "portMappings": [
-        {
-          "containerPort": 8080,
-          "hostPort": 8080
-        }
-      ]
-    }
-  ]
-  EOF
-}
+
