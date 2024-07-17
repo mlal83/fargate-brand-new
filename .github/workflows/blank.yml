@@ -4,7 +4,7 @@
 
 #need AWS credentials to feed into pipeline for authentication in order to build infrastructure
 
-name: CI/CD pipeline
+name: CI/CD pipeline/
 
 on:
   push:

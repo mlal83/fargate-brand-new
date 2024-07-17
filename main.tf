@@ -41,6 +41,7 @@ resource "aws_ecs_task_definition" "ecs_task" {
   execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
   cpu                      = "256"
   memory                   = "512"
+  
 
   container_definitions = jsonencode([
     {
@@ -74,11 +75,27 @@ resource "aws_subnet" "subnet" {
 resource "aws_security_group" "sg" {
   vpc_id = aws_vpc.main.id
   ingress {
-    from_port   = 8080
-    to_port     = 8080
+    from_port   = 443
+    to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+    ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Uncomment the following block to allow UDP traffic on port 443
+  # ingress {
+  #   from_port   = 443
+  #   to_port     = 443
+  #   protocol    = "udp"
+  #   cidr_blocks = ["0.0.0.0/0"]
+  # }
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -100,8 +117,6 @@ resource "aws_ecs_service" "ecs_service" {
     assign_public_ip = true
   }
 }
-
-
 
 
 resource "aws_iam_role" "ecs_task_execution_role" {
